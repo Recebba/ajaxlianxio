@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script>
+			function list(){
+				//创建异步对象xhr
+				var xhr = new XMLHttpRequest();
+				//接收请求，创建监听
+				xhr.onreadystatechange = function(){
+					if(xhr.readyState == 4 && xhr.status ==200){
+						var r = xhr.responseText;
+						// console.log(r);
+						//字符串解析为对象
+						var arr = JSON.parse(r);
+						// console.log(arr);
+						var htmlStr = `<table border="1" align="center">`
+						//循环
+						htmlStr += 
+						`<tr>
+				<td>用户姓名</td>
+				<td>用户邮箱</td>
+				<td>用户电话</td>
+				<td>真实姓名</td>
+				<td>性别</td>
+				
+			</tr>`;
+			
+			for (var i =0;i<arr.length;i++) {
+				if(arr[i].gender == 0){
+					var sex = '男';
+					
+				}else if(arr[i].gender == 1){
+					var sex = '女';
+				}else{
+					var sex = '不详';
+				} 
+			htmlStr +=`	<tr>
+				
+				<td>${arr[i].uname}</td>
+				
+				<td>${arr[i].email}</td>
+				<td>${arr[i].phone}</td>
+				<td>${arr[i].user_name}</td>
+				<td>${sex}</td>
+			</tr>`
+			}
+		htmlStr +=`</table>`
+						msg.innerHTML = htmlStr;
+					}
+				}
+				//创建请求，打开连接
+				xhr.open("get",`/pro/v1/list`,true);
+				
+				//发送请求
+				xhr.send();
+			}
+		</script>
+	</head>
+	<body onload="list()">
+		<div id="msg"></div>
+		
+	</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script>
+			function reg(){
+				//获取用户传递的数据
+				var _uname  = uname.value;
+				var _upwd  = upwd.value;
+				//非空验证
+				if(!uname){
+					alert('用户名不能为空');
+					return;//阻止函数往后执行，就会跳出函数
+				}
+				if(!upwd){
+					alert('密码不能为空');
+					return;
+				}
+				//创建xhr异步对象
+				var xhr = new XMLHttpRequest();
+				//接收请求，创建监听
+				xhr.onreadystatechange = function (){
+					if(xhr.readyState == 4 && xhr.status == 200){
+						var r = xhr.responseText;
+						if(r == 1){
+						 		msg.innerHTML = "reg_suc";
+						 	}else{
+						 		msg.innerHTML = "用户名或密码已存在";
+						 	}
+					// 	var arr = JSON(r);
+					// 	if(arr == 1){
+					// 		msg.innerHTML = "reg_suc";
+					// 	}else{
+					// 		msg.innerHTML = "用户名或密码已存在";
+					// 	}
+						
+					 }
+				}
+				//创建请求，打开连接
+				xhr.open("post","/pro/v1/reg",true);
+				//3.1创建请求主体
+				var a = `uname=${_uname}&upwd=${_upwd}`;
+				//3.2设置请求头信息
+				xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+				//3.发送请求
+				xhr.send(a);
+			}
+		</script>
+	</head>
+	<body>
+		<input type="text" id="uname" >
+		<input type="text" id="upwd">
+		<!-- <input type="text" id="uname">
+		<input type="text" id="uname">
+		<input type="text" id="uname">
+		<input type="text" id="uname">
+		<input type="text" id="uname">
+		<input type="text" id="uname"> -->
+		<button onclick="reg()">注册</button>
+		<div id="msg"></div>
+	</body>
+</html>

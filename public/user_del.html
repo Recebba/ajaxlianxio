@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript">
+			function del(){
+				var _uid = uid.value;
+				var xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function (){
+					if( xhr.readyState == 4 && xhr.status == 200){
+						var r  = xhr.responseText;
+						// console.log(r);
+						if(r == 1){
+							msg.innerHTML = "删除成功";
+						}
+							
+						else{
+							msg.innerHTML = "删除失败没有这个编号";
+						}
+					}
+				}
+				xhr.open("delete",`/pro/v1/del/${_uid}`,true);
+				xhr.open("get",`/pro/v1/del_sel/${_uid}`,true);
+				xhr.send();
+			}
+		</script>
+	</head>
+	<body>
+		<input type="text" id="uid">
+		<button onclick="del()">编号</button>
+		<div id="msg"></div>
+	</body>
+</html>

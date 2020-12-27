@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript">
+			function update(){
+				//获取用户输入的数据
+				var _uid = uid.value;
+				var _uname = uname.value;
+				var _upwd = upwd.value;
+				var _email = email.value;
+				var _phone = phone.value;
+				var _user_name = user_name.value;
+				var _gender = gender.value;
+				if(!_uid){
+					alert('用户编号不能为空');
+				}
+				//创建异步对象xhr
+				var xhr = new XMLHttpRequest();
+				//接收请求，创建监听
+				xhr.onreadystatechange = function(){
+					if(xhr.readyState == 4 & xhr.status==200){
+						var r = xhr.responseText;
+						// msg.innerHTML = r;
+						if(r == 1){
+							msg.innerHTML = "修改成功";
+						}else{
+							msg.innerHTML = "you are loser";
+						}
+					}
+				} 
+				//创建请求，打开连接
+				xhr.open("put","/pro/v1/update",true);
+				//创建请求主体
+				var formdata = `uid=${_uid}&uname=${_uname}&upwd=${_upwd}&email=${_email}&phone=${_phone}&user_name=${_user_name}&gender=${_gender}`;
+				//设置请求方式
+				xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+				//发送请求
+				xhr.send(formdata);
+			}
+		</script>
+	</head>
+	<body>
+		
+		<!-- 修改完去数据库查看是否修改 -->
+		编号<input type="text" id="uid"><br>
+		用户名<input type="text" id="uname"><br>
+		用户密码<input type="text" id="upwd"><br>
+		邮箱<input type="text" id="email"><br>
+		电话<input type="text" id="phone"><br>
+		真实姓名<input type="text" id="user_name"><br>
+		性别<input type="text" id="gender"><br>
+		<button onclick="update()">修改</button>
+		<div id="msg"></div>
+		
+	</body>
+</html>

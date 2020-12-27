@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript">
+			function getUname(){
+				var _uname = uname.value;
+				
+				var xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function (){
+					if(xhr.readyState == 4 & xhr.status == 200){
+						var r = xhr.responseText;
+						if(r == 1){
+							msg.innerHTML = "该用户名已存在";
+						}else{
+							msg.innerHTML = "没有此用户";
+						}
+						// msg.innerHTML = r;
+					}
+				}
+				xhr.open("get",`/pro/v1/getUname/${_uname}`,true);
+				xhr.send();
+			}
+		</script>
+	</head>
+	<body>
+		<input type="text" id="uname">
+		<button onclick="getUname()">查重</button>
+		<div id="msg"></div>
+	</body>
+</html>
